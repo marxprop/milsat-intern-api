@@ -58,15 +58,17 @@ namespace MilsatInternAPI.Data
         {
             foreach (var entry in ChangeTracker.Entries())
             {
-                switch (entry.State)
-                {
-                    case EntityState.Added:
-                        entry.CurrentValues["isDeleted"] = false;
-                        break;
-                    case EntityState.Deleted:
-                        entry.State = EntityState.Modified;
-                        entry.CurrentValues["isDeleted"] = true;
-                        break;
+                if (entry.Entity is User) {
+                    switch (entry.State)
+                    {
+                        case EntityState.Added:
+                            entry.CurrentValues["isDeleted"] = false;
+                            break;
+                        case EntityState.Deleted:
+                            entry.State = EntityState.Modified;
+                            entry.CurrentValues["isDeleted"] = true;
+                            break;
+                    }
                 }
             }
         }

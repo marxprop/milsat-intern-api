@@ -61,7 +61,7 @@ namespace MilsatInternAPI.Services
                     Institution = request.Institution,
                 };
 
-                if (request.MentorId != Guid.Empty)
+                if (request.MentorId.HasValue)
                 {
                     var selectedMentor = await _mentorRepo.GetAll().Include(x => x.User).FirstOrDefaultAsync(x => x.UserId == request.MentorId);
                     if (selectedMentor == null || selectedMentor.User.Department != newUser.Department)

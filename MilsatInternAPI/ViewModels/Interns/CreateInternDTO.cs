@@ -19,7 +19,7 @@ namespace MilsatInternAPI.ViewModels.Interns
         public string Institution { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
-        public Guid MentorId { get; set; }
+        public Guid? MentorId { get; set; }
         [Required]
         public DepartmentType Department { get; set; }
     }
