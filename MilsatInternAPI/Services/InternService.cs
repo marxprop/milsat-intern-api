@@ -61,19 +61,20 @@ namespace MilsatInternAPI.Services
                     Institution = request.Institution,
                 };
 
-                if (request.MentorId.HasValue)
+                var selectedMentorId = await SelectMentor(newUser.Department);
+                //var selectedMentor = await _mentorRepo.GetAll().Include(x => x.User).FirstOrDefaultAsync(x => x.UserId == request.MentorId);
+                //if (selectedMentor == null || selectedMentor.User.Department != newUser.Department)
+                //{
+                //    return new GenericResponse<List<InternResponseDTO>>
+                //    {
+                //        Successful = false,
+                //        ResponseCode = ResponseCode.NotFound,
+                //        Message = "Mentor Id Not Found"
+                //    };
+                //}
+                if (selectedMentorId != null)
                 {
-                    var selectedMentor = await _mentorRepo.GetAll().Include(x => x.User).FirstOrDefaultAsync(x => x.UserId == request.MentorId);
-                    if (selectedMentor == null || selectedMentor.User.Department != newUser.Department)
-                    {
-                        return new GenericResponse<List<InternResponseDTO>>
-                        {
-                            Successful = false,
-                            ResponseCode = ResponseCode.NotFound,
-                            Message = "Mentor Id Not Found"
-                        };
-                    }
-                    newIntern.MentorId = selectedMentor.UserId;
+                    newIntern.MentorId = selectedMentorId;
                 }
                 await _userRepo.AddAsync(newUser);
                 newIntern.UserId = newUser.UserId;
@@ -97,6 +98,20 @@ namespace MilsatInternAPI.Services
                     ResponseCode = ResponseCode.EXCEPTION_ERROR
                 };
             }
+        }
+
+        public async Task<Guid?> SelectMentor(DepartmentType department)
+        {
+            var availableMentors = await _mentorRepo.GetAll().Where(x => x.User.Department == department).ToListAsync();
+            int totalAvailableMentors = availableMentors.Count();
+            if (totalAvailableMentors > 0)
+            {
+                Random random = new Random();
+                var mentor_idx = random.Next(totalAvailableMentors);
+                var mentor = availableMentors[mentor_idx];
+                return mentor.UserId;
+            }
+            return null;
         }
 
         public async Task<GenericResponse<List<InternResponseDTO>>> GetAllInterns(int pageNumber, int pageSize)
