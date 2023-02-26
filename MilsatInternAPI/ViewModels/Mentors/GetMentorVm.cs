@@ -6,6 +6,6 @@ namespace MilsatInternAPI.ViewModels.Mentors
     {
         public Guid? id { get; set; }
         public string? name { get; set; }
-        public DepartmentType? department { get; set; }
+        public TeamType? Team { get; set; }
     }
 }

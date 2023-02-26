@@ -2,7 +2,7 @@
 
 namespace MilsatInternAPI.Enums
 {
-    public enum DepartmentType
+    public enum TeamType
     {
         [Description("Backend")]
         Backend,

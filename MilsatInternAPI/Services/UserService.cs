@@ -97,7 +97,7 @@ namespace MilsatInternAPI.Services
                 var filtered = await _userRepo.GetAll()
                                                  .Where(x =>
                                                          (vm.name == null || x.FullName.Contains(vm.name))
-                                                         && (vm.department == null || x.Department == vm.department)
+                                                         && (vm.Team == null || x.Team == vm.Team)
                                                          && (vm.role == null || x.Role == vm.role))
                                                  .Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
                 var users = UserResponseData(filtered);
@@ -235,7 +235,7 @@ namespace MilsatInternAPI.Services
                     PhoneNumber = user.PhoneNumber,
                     Bio = user.Bio,
                     ProfilePicture = profilePicture,
-                    Department = user.Department,
+                    Team = user.Team,
                     Role = user.Role,
                 });
             };

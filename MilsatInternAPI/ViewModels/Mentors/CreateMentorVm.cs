@@ -15,7 +15,7 @@ namespace MilsatInternAPI.ViewModels.Mentors
         [Required]
         public string PhoneNumber { get; set; }
         [Required]
-        public DepartmentType Department { get; set; }
+        public TeamType Team { get; set; }
     }
 }
 

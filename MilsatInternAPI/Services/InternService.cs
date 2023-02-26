@@ -50,7 +50,7 @@ namespace MilsatInternAPI.Services
                 var newUser = new User {
                     Email = request.Email, Role = RoleType.Intern,
                     FullName = request.FullName, Gender = request.Gender,
-                    PhoneNumber = request.PhoneNumber, Department = request.Department
+                    PhoneNumber = request.PhoneNumber, Team = request.Team
                 };
                 newUser = _authService.RegisterPassword(newUser, request.PhoneNumber);
 
@@ -61,9 +61,9 @@ namespace MilsatInternAPI.Services
                     Institution = request.Institution,
                 };
 
-                var selectedMentorId = await SelectMentor(newUser.Department);
+                var selectedMentorId = await SelectMentor(newUser.Team);
                 //var selectedMentor = await _mentorRepo.GetAll().Include(x => x.User).FirstOrDefaultAsync(x => x.UserId == request.MentorId);
-                //if (selectedMentor == null || selectedMentor.User.Department != newUser.Department)
+                //if (selectedMentor == null || selectedMentor.User.Team != newUser.Team)
                 //{
                 //    return new GenericResponse<List<InternResponseDTO>>
                 //    {
@@ -100,9 +100,9 @@ namespace MilsatInternAPI.Services
             }
         }
 
-        public async Task<Guid?> SelectMentor(DepartmentType department)
+        public async Task<Guid?> SelectMentor(TeamType Team)
         {
-            var availableMentors = await _mentorRepo.GetAll().Where(x => x.User.Department == department).ToListAsync();
+            var availableMentors = await _mentorRepo.GetAll().Where(x => x.User.Team == Team).ToListAsync();
             int totalAvailableMentors = availableMentors.Count();
             if (totalAvailableMentors > 0)
             {
@@ -188,7 +188,7 @@ namespace MilsatInternAPI.Services
                 var filtered = await _userRepo.GetAll().Include(e => e.Intern)
                                                  .Where(x => x.Role == RoleType.Intern &&
                                                         (vm.name == null || x.FullName.Contains(vm.name)
-                                                        && vm.department == null || x.Department == vm.department))
+                                                        && vm.Team == null || x.Team == vm.Team))
                                                  .Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
                 var users = InternResponseData(filtered);
                 return new GenericResponse<List<InternResponseDTO>>
@@ -229,7 +229,7 @@ namespace MilsatInternAPI.Services
                     };
                 }
 
-                user.Department = vm.Department;
+                user.Team = vm.Team;
                 user.FullName = vm.FullName;
                 user.Email = vm.Email;
                 user.PhoneNumber = vm.PhoneNumber;
@@ -237,7 +237,7 @@ namespace MilsatInternAPI.Services
                 if (vm.MentorId != Guid.Empty)
                 {
                     var selectedMentor = await _userRepo.GetAll().Where(x => x.UserId == vm.MentorId
-                                                                        && x.Department == vm.Department
+                                                                        && x.Team == vm.Team
                                                                         && x.Role == RoleType.Mentor)
                                                                         .FirstOrDefaultAsync();
                     if (selectedMentor == null)
@@ -287,7 +287,7 @@ namespace MilsatInternAPI.Services
                     Email = user.Email,
                     FullName = user.FullName,
                     PhoneNumber = user.PhoneNumber,
-                    Department = user.Department,
+                    Team = user.Team,
                     CourseOfStudy = user.Intern.CourseOfStudy,
                     Institution = user.Intern.Institution,
                     Gender = user.Gender,

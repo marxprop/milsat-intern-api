@@ -16,6 +16,6 @@ namespace MilsatInternAPI.ViewModels.Interns
         [Required]
         public Guid? MentorId { get; set; } = Guid.Empty;
         [Required]
-        public DepartmentType Department { get; set; }
+        public TeamType Team { get; set; }
     }
 }

@@ -50,7 +50,7 @@ namespace MilsatInternAPI.Services
                     var newUser = new User { 
                         Email = mentor.Email, Role = RoleType.Mentor,
                         FullName = mentor.FullName, Gender = mentor.Gender,
-                        PhoneNumber = mentor.PhoneNumber, Department = mentor.Department
+                        PhoneNumber = mentor.PhoneNumber, Team = mentor.Team
                     };
                     newUser = _authService.RegisterPassword(newUser, mentor.PhoneNumber);
                     await _userRepo.AddAsync(newUser);
@@ -151,7 +151,7 @@ namespace MilsatInternAPI.Services
                 var filtered = await _userRepo.GetAll().Include(e => e.Mentor).ThenInclude(e => e.Interns)
                                                      .Where(x => x.Role == RoleType.Mentor &&
                                                             (vm.name == null || x.FullName.Contains(vm.name)
-                                                            && vm.department == null || x.Department == vm.department))
+                                                            && vm.Team == null || x.Team == vm.Team))
                                                      .Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
                 var users = MentorResponseData(filtered);
                 return new GenericResponse<List<MentorResponseDTO>>
@@ -194,7 +194,7 @@ namespace MilsatInternAPI.Services
                 mentor.FullName = vm.FullName ;
                 mentor.Email = vm.Email;
                 mentor.PhoneNumber = vm.PhoneNumber;
-                if (vm.Department != mentor.Department)
+                if (vm.Team != mentor.Team)
                 {
                     mentor.Mentor.Interns = new List<Intern> { };
 
@@ -233,7 +233,7 @@ namespace MilsatInternAPI.Services
                     Email = mentor.User.Email,
                     FullName = mentor.User.FullName,
                     PhoneNumber = mentor.User.PhoneNumber,
-                    Department = mentor.User.Department,
+                    Team = mentor.User.Team,
                     Gender = mentor.User.Gender,
                     Bio = mentor.User.Bio,
                     ProfilePicture = profilePicture,
@@ -255,7 +255,7 @@ namespace MilsatInternAPI.Services
                     Email = mentor.Email,
                     FullName = mentor.FullName,
                     PhoneNumber = mentor.PhoneNumber,
-                    Department = mentor.Department,
+                    Team = mentor.Team,
                     Gender = mentor.Gender,
                     Bio = mentor.Bio,
                     ProfilePicture = Utils.GetUserPicture(_iconfig["ProfilePicturesPath"], mentor.ProfilePicture),

@@ -8,7 +8,7 @@ namespace MilsatInternAPI.ViewModels.Users
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
-        public DepartmentType Department { get; set; }
+        public TeamType Team { get; set; }
         public RoleType Role { get; set; }
     }
 }

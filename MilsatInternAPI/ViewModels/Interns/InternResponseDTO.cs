@@ -8,7 +8,7 @@ namespace MilsatInternAPI.ViewModels.Interns
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string FullName { get; set; }
-        public DepartmentType Department { get; set; }
+        public TeamType Team { get; set; }
         public string CourseOfStudy { get; set; }
         public string Institution { get; set; }
         public GenderType Gender { get; set; }

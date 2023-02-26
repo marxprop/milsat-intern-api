@@ -91,7 +91,7 @@ namespace MilsatInternAPI.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("Department")
+                    b.Property<int>("Team")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -151,7 +151,7 @@ namespace MilsatInternAPI.Migrations
                         {
                             UserId = new Guid("98d22c64-dc0d-4fd5-934c-87c6d01990b2"),
                             Bio = "",
-                            Department = 0,
+                            Team = 0,
                             Email = "mentor1@gmail.com",
                             FullName = "Sodiq Agboola",
                             Gender = 0,
@@ -169,7 +169,7 @@ namespace MilsatInternAPI.Migrations
                         {
                             UserId = new Guid("83f75ab4-c696-4957-9ad0-32ff0fe7ae46"),
                             Bio = "",
-                            Department = 0,
+                            Team = 0,
                             Email = "mentor2@gmail.com",
                             FullName = "Sodiq Agboola",
                             Gender = 0,
@@ -187,7 +187,7 @@ namespace MilsatInternAPI.Migrations
                         {
                             UserId = new Guid("9bc02df4-d3b9-4f3a-9949-13c21f76990e"),
                             Bio = "",
-                            Department = 5,
+                            Team = 5,
                             Email = "admin@milsat.com",
                             FullName = "Admin",
                             Gender = 0,

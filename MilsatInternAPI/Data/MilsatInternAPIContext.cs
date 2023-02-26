@@ -80,7 +80,7 @@ namespace MilsatInternAPI.Data
             {
                 var user = new User { 
                     UserId = Guid.NewGuid(), Email = $"mentor{i}@gmail.com", Role = RoleType.Mentor,
-                    FullName = "Sodiq Agboola", PhoneNumber = "passwords", Department = DepartmentType.Backend,
+                    FullName = "Sodiq Agboola", PhoneNumber = "passwords", Team = TeamType.Backend,
                 };
                 var _user = setter(user, user.PhoneNumber);
                 all.Add(_user);
@@ -88,7 +88,7 @@ namespace MilsatInternAPI.Data
 
             var admin = new User {
                 UserId = Guid.NewGuid(), Email = "admin@milsat.com", Role = RoleType.Admin,
-                FullName = "Admin", PhoneNumber = "datasolutions", Department = DepartmentType.Staff
+                FullName = "Admin", PhoneNumber = "datasolutions", Team = TeamType.Staff
             };
             var _admin = setter(admin, admin.PhoneNumber);
             all.Add(_admin);
